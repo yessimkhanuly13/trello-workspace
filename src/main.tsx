@@ -4,11 +4,24 @@ import App from './App.tsx'
 import './index.css'
 import { store } from './store/store.ts'
 import { Provider } from 'react-redux'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Board from './components/Board.tsx'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element : <App/>
+  },
+  {
+    path: "/board/:id",
+    element: <Board/>
+  }
+])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>,
 )
