@@ -1,7 +1,7 @@
-function Card() {
+function Card({data}) {
   return (
-    <div>
-      
+    <div className="border m-2">
+      {data.text}
     </div>
   )
 }

@@ -20,20 +20,25 @@ function Home() {
     console.log(newBoard)
   }
   return (
-    <>
-     {boards.map((board)=>{
-      return(<div className="border m-2 p-2">
-        <p> Title: {board.title}</p>
-        <p> Id : {board.id}</p>
-        <button onClick={()=> dispatch(deleteBoard({ id: board.id }))}>Delete</button>
-        <Link to={`/board/${board.id}`}>Link</Link>
-      </div>)
-     })}
-      
-      <input name="title" type="text" onChange={(e)=>handleBoard(e)}/>
-      <input name="id" type="text" onChange={(e)=>handleBoard(e)}/>
-      <button onClick={()=>dispatch(addBoard(newBoard))}>Add new Board</button>
-    </>
+    <div>
+      <div className="flex flex-col">
+        <input name="title" type="text" onChange={(e)=>handleBoard(e)}/>
+        <input name="id" type="text" onChange={(e)=>handleBoard(e)}/>
+        <button onClick={()=>dispatch(addBoard(newBoard))}>Add new Board</button>
+      </div>
+      <div className="flex flex-between flex-auto">
+        {boards.map((board)=>{
+          return(
+            <div className="border m-2 flex flex-col">
+                <p> Title: {board.title}</p>
+                <p> Id : {board.id}</p>
+                <button onClick={()=> dispatch(deleteBoard({ id: board.id }))}>Delete</button>
+                <Link to={`/board/${board.id}`}>Link</Link>
+            </div>
+          )
+        })}
+      </div>
+    </div>
   )
 }
 

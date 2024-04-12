@@ -7,7 +7,6 @@ function App() {
 
   return (
     <div className='flex flex-col'>
-      <Counter/>
       <Home/>
     </div>
   )

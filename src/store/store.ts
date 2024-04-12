@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from './counter/counterSlice'
 import boardSlice from './board/boardSlice'
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     board: boardSlice
   },
 })

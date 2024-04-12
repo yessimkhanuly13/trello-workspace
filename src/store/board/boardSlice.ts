@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export interface Card{
+export interface Cards{
   id: string, 
   text: string
 }
@@ -9,7 +9,7 @@ export interface Card{
 export interface List{
   title: string,
   id: string,
-  cards: Card[]
+  cards: Cards[]
 }
 
 interface Board {
