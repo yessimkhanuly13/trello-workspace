@@ -18,9 +18,9 @@ interface Board {
 
 const initialState: Board = {
   lists: [
-  {title: "List 1", id: "1", cards: [] },
-  {title: "List 2", id: "3", cards: [] },
-  {title: "List 3", id: "5", cards: [] }]
+  {title: "Board 1", id: "1", cards: [] },
+  {title: "Board 2", id: "3", cards: [] },
+  {title: "Board 3", id: "5", cards: [] }]
 }
 
 export const BoardSlice = createSlice({

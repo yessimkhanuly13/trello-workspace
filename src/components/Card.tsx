@@ -1,9 +1,15 @@
-function Card({data}) {
+import {Card, CardBody} from "@nextui-org/react";
+
+function BoardCard({data}) {
   return (
-    <div className="border m-2">
-      {data.text}
+    <div className="p-2">
+      <Card>
+        <CardBody>
+          <p>{data.text}</p>
+        </CardBody>
+      </Card>
     </div>
   )
 }
 
-export default Card
+export default BoardCard

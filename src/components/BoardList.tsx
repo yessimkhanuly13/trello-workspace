@@ -1,10 +1,10 @@
 import { Cards } from "../store/board/boardSlice"
-import Card from "./Card"
+import BoardCard from "./Card"
 
 function BoardList() {
   const arr: Cards[] = [{
     id: "1",
-    text: "card1"
+    text: "card1",
   },
   {
     id: "3",
@@ -20,13 +20,14 @@ function BoardList() {
   }]
 
   return (
-    <div className="border">\
+    <div className="flex flex-col">
         
       {arr.map((card)=>{
         return (
-          <Card data={card}/>
+          <BoardCard data={card}/>
         )
       })}
+
     </div>
   )
 }
