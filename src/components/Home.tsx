@@ -5,7 +5,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 function Home() {
-  const boards = useSelector((state: RootState) => state.board.lists)
+  const boards = useSelector((state: RootState) => state.board.boards)
   // const dispatch = useDispatch()
   // const [newBoard, setNewBoard] = useState<List>({
   //   title: "",
@@ -34,7 +34,6 @@ function Home() {
           return(
             <div className="border m-2 flex flex-col p-2">
                 {/* <button onClick={()=> dispatch(deleteBoard({ id: board.id }))}>Delete</button> */}
-                
                 <Link to={`/board/${board.id}`}>
                   <div>{board.title}</div>
                 </Link>

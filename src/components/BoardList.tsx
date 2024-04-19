@@ -1,33 +1,20 @@
 import {Button} from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {Textarea} from "@nextui-org/react";
 import { Cards } from "../store/board/boardSlice"
 import BoardCard from "./Card"
 
-function BoardList() {
-  const arr: Cards[] = [{
-    id: "1",
-    text: "cardddsddddddddd",
-  },
-  {
-    id: "3",
-    text: "card3ddddddddd"
-  },
-  {
-    id: "2",
-    text: "card2ddddddd"
-  },
-  {
-    id: "4",
-    text: "card4dddddd"
-  }]
+function BoardList({arr}) {
 
   const [isOpen, setIsOpen] = useState<Boolean>(false)
+  useEffect(()=>{
+    console.log(arr)
+  }, [])
 
   return (
-    <div className="flex flex-col border p-2 w-64">
+    <div className="flex flex-col border p-2 w-64 m-4">
         
-      {arr.map((card)=>{
+      {arr.cards.map((card)=>{
         return (
           <BoardCard data={card}/>
         )
