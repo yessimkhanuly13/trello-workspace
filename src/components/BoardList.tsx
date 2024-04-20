@@ -3,17 +3,20 @@ import { useEffect, useState } from "react";
 import {Textarea} from "@nextui-org/react";
 import { Cards } from "../store/board/boardSlice"
 import BoardCard from "./Card"
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 function BoardList({arr}) {
 
+  // const params =  useParams<{id: string}>();
+  // const boards = useSelector((state: RootState)=>state.board.boards)
   const [isOpen, setIsOpen] = useState<Boolean>(false)
-  useEffect(()=>{
-    console.log(arr)
-  }, [])
+  // const dispatch = useDispatch();
+
 
   return (
     <div className="flex flex-col border p-2 w-64 m-4">
-        
+      {arr.title}
       {arr.cards.map((card)=>{
         return (
           <BoardCard data={card}/>

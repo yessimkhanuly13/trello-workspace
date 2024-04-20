@@ -3,15 +3,17 @@ import BoardList from "./BoardList";
 import {Button} from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import {Input} from "@nextui-org/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
-import { List } from "../store/board/boardSlice";
+import { List, addList } from "../store/board/boardSlice";
 
 function Board() {
     const params =  useParams<{id: string}>();
     const boards = useSelector((state: RootState)=>state.board.boards)
     const [isOpen, setIsOpen] = useState<Boolean>(false)
-    const [lists, setLists] = useState<List[]>([]);  
+    const [lists, setLists] = useState<List[]>([]); 
+    const [listTitle, setNewList] = useState<string>("") 
+    const dispatch = useDispatch();
 
     const handleLists = () => {
         const currentBoard = boards.find((board) => board.id === params.id)
@@ -19,9 +21,20 @@ function Board() {
         currentBoard && console.log(lists)
     }
 
+    const handleNewList = () =>{
+        const currentBoard = boards.find((board)=>board.id === params.id)
+        if(currentBoard){
+            const boardId = currentBoard.id;
+            const listId = "124";
+            dispatch(addList({boardId, listId, listTitle}))
+        }
+        return
+        
+    }
+
     useEffect(()=>{
         handleLists();
-    },[lists])
+    },[boards])
     return (
         <div className="m-2 p-2 flex">
             <div className="flex">
@@ -48,13 +61,18 @@ function Board() {
                         <div className="flex flex-col">
                             <Input
                                 placeholder="Enter list title..."
+                                onChange={(e)=>setNewList(e.target.value)}
                             >
                             </Input>
                             <div className="flex justify-between p-1">
-                                <Button onPress={()=>setIsOpen(false)} className="m-2">
+                                <Button onPress={handleNewList} className="m-2">
                                     Add list
                                 </Button>
-                                <Button onPress={()=>setIsOpen(false)} className="m-2">
+                                <Button onPress={()=>{
+                                    setNewList("")
+                                    setIsOpen(false)
+                                }
+                                    } className="m-2">
                                     Cancel
                                 </Button>
                             </div>
