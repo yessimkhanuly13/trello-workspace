@@ -11,7 +11,7 @@ export interface List{
   cards: Cards[]
 }
 
-interface Board {
+export interface Board {
   lists: List[], 
   title: string,
   id: string
@@ -89,7 +89,7 @@ export const BoardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    addBoard: (state, action: PayloadAction<{boardId: string, boardTitle: string, lists: List[]}>) =>{
+    addBoard: (state, action: PayloadAction<{boardId: string, boardTitle: string}>) =>{
         state.boards.push({
           title: action.payload.boardTitle,
           id: action.payload.boardId,
@@ -121,9 +121,11 @@ export const BoardSlice = createSlice({
     }, 
 
     addCard: (state, action: PayloadAction<{boardId: string, listId: string, cardId: string, text: string}>) =>{
-      const board = state.boards.find((board) => board.id === action.payload.boardId)
-      const list  = board ? board.lists.find((list)=> list.id === action.payload.listId) : null;
 
+      const board = state.boards.find((board) => board.id === action.payload.boardId)
+      console.log("Board: ",board)
+      const list  = board ? board.lists.find((list)=> list.id === action.payload.listId) : null;
+      console.log("List: ",list)
       list && list.cards.push({
         id: action.payload.cardId,
         text: action.payload.text

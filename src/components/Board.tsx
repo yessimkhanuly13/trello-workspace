@@ -4,8 +4,8 @@ import {Button} from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import {Input} from "@nextui-org/react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
-import { List, addList } from "../store/board/boardSlice";
+import { List, addList, removeBoard } from "../store/board/boardSlice";
+import { RootState } from "../store/store";
 
 function Board() {
     const params =  useParams<{id: string}>();
@@ -31,6 +31,12 @@ function Board() {
         return
         
     }
+
+    // const handleRemoveBoard = () =>{
+    //     const currentBoard = boards.find((board)=>board.id === params.id)
+    //     const boardId = currentBoard ? currentBoard.id : ""
+    //     dispatch(removeBoard({boardId}))
+    // }
 
     useEffect(()=>{
         handleLists();

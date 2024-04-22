@@ -1,18 +1,35 @@
 import {Button} from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {Textarea} from "@nextui-org/react";
-import { Cards } from "../store/board/boardSlice"
+import { addCard, removeList } from "../store/board/boardSlice"
 import BoardCard from "./Card"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { RootState } from "../store/store";
 
 function BoardList({arr}) {
 
-  // const params =  useParams<{id: string}>();
-  // const boards = useSelector((state: RootState)=>state.board.boards)
+  const params =  useParams<{id: string}>();
+  const boards = useSelector((state: RootState)=>state.board.boards)
   const [isOpen, setIsOpen] = useState<Boolean>(false)
-  // const dispatch = useDispatch();
+  const [text, setCardText] = useState<string>("")
+  const dispatch = useDispatch();
 
+  const handleNewCard = () => {
+      const currentBoard = boards.find((board) => board.id === params.id)
+      const boardId = currentBoard ? currentBoard.id : ""
+      const listId = arr.id
+      const cardId = "124"
+      dispatch(addCard({boardId, listId, cardId, text}))
+      setIsOpen(false)
+  }
+
+  // const handleRemoveList = () =>{
+  //   const currentBoard = boards.find((board) => board.id === params.id)
+  //   const boardId = currentBoard ? currentBoard.id : ""
+  //   const listId = arr.id
+  //   dispatch(removeList({boardId, listId}))
+  // }
 
   return (
     <div className="flex flex-col border p-2 w-64 m-4">
@@ -36,10 +53,11 @@ function BoardList({arr}) {
                         <div className="flex flex-col">
                             <Textarea
                                 placeholder="Enter a title for this card..."
+                                onChange={(e)=>setCardText(e.target.value)}
                             >
                             </Textarea>
                             <div className="flex justify-between p-1">
-                                <Button onPress={()=>setIsOpen(false)} className="m-2">
+                                <Button onPress={handleNewCard} className="m-2">
                                     Add card
                                 </Button>
                                 <Button onPress={()=>setIsOpen(false)} className="m-2">
