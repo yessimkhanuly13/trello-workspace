@@ -1,8 +1,8 @@
-import {Button} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useState } from "react";
-import {Textarea} from "@nextui-org/react";
+import { Textarea, Input } from "@nextui-org/react";
 import { addCard, removeList } from "../store/board/boardSlice"
-import BoardCard from "./Card"
+import { BoardCard } from "./index"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../store/store";
@@ -12,6 +12,8 @@ function BoardList({arr}) {
   const params =  useParams<{id: string}>();
   const boards = useSelector((state: RootState)=>state.board.boards)
   const [isOpen, setIsOpen] = useState<Boolean>(false)
+  const [title, setTitle] = useState<string>('');
+  const [isEditingTitle, setIsEditingTitle] = useState<Boolean>(false)
   const [text, setCardText] = useState<string>("")
   const dispatch = useDispatch();
 
@@ -19,7 +21,7 @@ function BoardList({arr}) {
       const currentBoard = boards.find((board) => board.id === params.id)
       const boardId = currentBoard ? currentBoard.id : ""
       const listId = arr.id
-      const cardId = "124"
+      const cardId = "" + arr.cards.length + 1;
       dispatch(addCard({boardId, listId, cardId, text}))
       setIsOpen(false)
   }
@@ -31,9 +33,26 @@ function BoardList({arr}) {
   //   dispatch(removeList({boardId, listId}))
   // }
 
+  const handleDrop = (e) =>{
+      console.log("Card id: " + e.dataTransfer.getData("cardId"))
+      console.log("List Id: " + arr.id)
+  }
+
   return (
-    <div className="flex flex-col border p-2 w-64 m-4">
-      {arr.title}
+    <div className="flex flex-col border p-2 w-64 m-4" 
+    onDrop={(e) => handleDrop(e)}
+    onDragStart={(e)=> e.dataTransfer.setData("listId", arr.id)}
+    onDragOver={(e)=>e.preventDefault()}
+    >
+      {isEditingTitle ? 
+        (
+            <Input
+              autoFocus
+              onBlur={()=>setIsEditingTitle(false)}
+              defaultValue={arr.title}
+              />
+        ) : (<h1 onClick={()=>setIsEditingTitle(true)}>{arr.title}</h1>)
+      }
       {arr.cards.map((card)=>{
         return (
           <BoardCard data={card}/>
@@ -54,6 +73,7 @@ function BoardList({arr}) {
                             <Textarea
                                 placeholder="Enter a title for this card..."
                                 onChange={(e)=>setCardText(e.target.value)}
+                                autoFocus
                             >
                             </Textarea>
                             <div className="flex justify-between p-1">

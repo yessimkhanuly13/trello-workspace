@@ -1,8 +1,8 @@
 import { Link, useParams } from "react-router-dom"
-import BoardList from "./BoardList";
-import {Button} from "@nextui-org/react";
+import { BoardList } from "./index";
+import { Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import {Input} from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 import { useDispatch, useSelector } from "react-redux";
 import { List, addList, removeBoard } from "../store/board/boardSlice";
 import { RootState } from "../store/store";
@@ -25,8 +25,11 @@ function Board() {
         const currentBoard = boards.find((board)=>board.id === params.id)
         if(currentBoard){
             const boardId = currentBoard.id;
-            const listId = "124";
+            const listId = "" + currentBoard.lists.length + 1;
+            console.log(listId)
             dispatch(addList({boardId, listId, listTitle}))
+            setNewList('')
+            setIsOpen(false)
         }
         return
         
@@ -38,11 +41,18 @@ function Board() {
     //     dispatch(removeBoard({boardId}))
     // }
 
+    const handleDrop = (e) =>{
+        console.log("List id: " + e.dataTransfer.getData("listId"))
+        console.log("Board Id: " + params.id)
+    }
+
     useEffect(()=>{
         handleLists();
     },[boards])
     return (
-        <div className="m-2 p-2 flex">
+        <div className="m-2 p-2 flex"
+            onDrop={(e)=>handleDrop(e)}
+        >
             <div className="flex">
                 {
                     lists && lists.map((list)=>{
@@ -68,6 +78,7 @@ function Board() {
                             <Input
                                 placeholder="Enter list title..."
                                 onChange={(e)=>setNewList(e.target.value)}
+                                autoFocus
                             >
                             </Input>
                             <div className="flex justify-between p-1">

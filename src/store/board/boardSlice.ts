@@ -17,7 +17,7 @@ export interface Board {
   id: string
 }
 
-interface Boards {
+export interface Boards {
   boards: Board[]
 }
 

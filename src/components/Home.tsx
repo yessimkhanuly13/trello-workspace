@@ -10,7 +10,8 @@ function Home() {
   const [boardTitle, setBoardTitle] = useState<string>("")
 
   const handleBoard = () => {
-    const boardId = "1233"
+    const boardId = "" + boards.length + 1
+    console.log(boardId)
     dispatch(addBoard({boardTitle, boardId}))
     console.log(boards)
   }
