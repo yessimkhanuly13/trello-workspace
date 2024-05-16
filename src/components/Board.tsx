@@ -41,17 +41,17 @@ function Board() {
     //     dispatch(removeBoard({boardId}))
     // }
 
-    const handleDrop = (e) =>{
-        console.log("List id: " + e.dataTransfer.getData("listId"))
-        console.log("Board Id: " + params.id)
-    }
+    // const handleDrop = (e) =>{
+    //     console.log("List id: " + e.dataTransfer.getData("listId"))
+    //     console.log("Board Id: " + params.id)
+    // }
 
     useEffect(()=>{
         handleLists();
     },[boards])
     return (
         <div className="m-2 p-2 flex"
-            onDrop={(e)=>handleDrop(e)}
+            // onDrop={(e)=>handleDrop(e)}
         >
             <div className="flex">
                 {

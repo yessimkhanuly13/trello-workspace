@@ -1,7 +1,7 @@
-import { Button } from "@nextui-org/react";
+import { Button, card } from "@nextui-org/react";
 import { useState } from "react";
 import { Textarea, Input } from "@nextui-org/react";
-import { addCard, removeList } from "../store/board/boardSlice"
+import { addCard, removeList, dragCard } from "../store/board/boardSlice"
 import { BoardCard } from "./index"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -34,14 +34,18 @@ function BoardList({arr}) {
   // }
 
   const handleDrop = (e) =>{
-      console.log("Card id: " + e.dataTransfer.getData("cardId"))
-      console.log("List Id: " + arr.id)
+      const listId = arr.id
+      const cardId = e.dataTransfer.getData("cardId")
+      const prevListId = e.dataTransfer.getData("listId")
+      const boardId = params.id
+      dispatch(dragCard({boardId, listId, cardId, prevListId}))
+     
   }
 
   return (
     <div className="flex flex-col border p-2 w-64 m-4" 
     onDrop={(e) => handleDrop(e)}
-    onDragStart={(e)=> e.dataTransfer.setData("listId", arr.id)}
+    // onDragStart={(e)=> e.dataTransfer.setData("listId", arr.id)}
     onDragOver={(e)=>e.preventDefault()}
     >
       {isEditingTitle ? 
@@ -55,7 +59,7 @@ function BoardList({arr}) {
       }
       {arr.cards.map((card)=>{
         return (
-          <BoardCard data={card}/>
+          <BoardCard data={card} listId={arr.id}/>
         )
       })}
       {

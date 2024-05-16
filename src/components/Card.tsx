@@ -1,13 +1,12 @@
 import { Card, CardBody } from "@nextui-org/react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 // import { RootState } from "../store/store";
-// import { removeCard } from "../store/board/boardSlice"
+import { dragCardSwap } from "../store/board/boardSlice"
 
-function BoardCard({data}) {
-  // const boards = useSelector((state: RootState)=>state.board.boards)
-  // const params = useParams<{id: string}>()
-  // const dispatch = useDispatch()
+function BoardCard({data, listId}) {
+  const params = useParams<{id: string}>()
+  const dispatch = useDispatch()
   
   // const handleRemove = (cardId) =>{
   //   const currentBoard = boards.find((board)=> board.id === params.id)
@@ -15,6 +14,18 @@ function BoardCard({data}) {
   //   const listId = arr.id
   //   dispatch(removeCard({boardId, listId, cardId}))
   // }
+
+  const handleDrop = (e) => {
+    const cardId = e.dataTransfer.getData("cardId")
+    const boardId = params.id
+    const swapCardId = data.id
+    const prevListId = e.dataTransfer.getData("listId")
+    if(cardId){
+      dispatch(dragCardSwap({boardId, listId, cardId, swapCardId, prevListId}))
+    }
+
+    return 
+  }
 
   return ( 
     <div className="p-1">
@@ -27,7 +38,11 @@ function BoardCard({data}) {
         onDragOver={(e)=>{
           e.preventDefault()
         }} 
-        onDragStart={(e)=>e.dataTransfer.setData("cardId", data.id)} 
+        onDragStart={(e)=>{
+          e.dataTransfer.setData("cardId", data.id)
+          e.dataTransfer.setData("listId", listId)
+        }} 
+        onDrop={(e)=>handleDrop(e)}
       >
         <CardBody>
           <p>{data.text}</p>
