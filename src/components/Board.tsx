@@ -6,6 +6,7 @@ import { Input } from "@nextui-org/react";
 import { useDispatch, useSelector } from "react-redux";
 import { List, addList, removeBoard } from "../store/board/boardSlice";
 import { RootState } from "../store/store";
+import { v4 as uuidv4 } from "uuid"
 
 function Board() {
     const params =  useParams<{id: string}>();
@@ -13,10 +14,12 @@ function Board() {
     const [isOpen, setIsOpen] = useState<Boolean>(false)
     const [lists, setLists] = useState<List[]>([]); 
     const [listTitle, setNewList] = useState<string>("") 
+    const [boardTitle, setBoardTitle] = useState<string>("")
     const dispatch = useDispatch();
 
     const handleLists = () => {
         const currentBoard = boards.find((board) => board.id === params.id)
+        setBoardTitle(currentBoard.title)
         currentBoard && setLists(currentBoard.lists)
         currentBoard && console.log(lists)
     }
@@ -28,7 +31,7 @@ function Board() {
         const currentBoard = boards.find((board)=>board.id === params.id)
         if(currentBoard){
             const boardId = currentBoard.id;
-            const listId = "" + currentBoard.lists.length + 1;
+            const listId = uuidv4();
             console.log(listId)
             dispatch(addList({boardId, listId, listTitle}))
             setNewList('')
@@ -52,6 +55,9 @@ function Board() {
     return (
         <>
         <NavbarComp/>
+        <div className="flex w-screen p-2">
+            <p>{boardTitle}</p>
+        </div>
         <div className="m-2 p-2 flex"
             onDragOver={(e)=>e.preventDefault()}
         >

@@ -6,6 +6,7 @@ import { BoardCard } from "./index"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../store/store";
+import { v4 as uuidv4 } from 'uuid';
 
 function BoardList({arr}) {
 
@@ -21,7 +22,7 @@ function BoardList({arr}) {
       const currentBoard = boards.find((board) => board.id === params.id)
       const boardId = currentBoard ? currentBoard.id : ""
       const listId = arr.id
-      const cardId = "" + arr.cards.length + 1;
+      const cardId = uuidv4();
       dispatch(addCard({boardId, listId, cardId, text}))
       setIsOpen(false)
   }
