@@ -207,12 +207,25 @@ export const BoardSlice = createSlice({
       }
       console.log("drag card swap")
 
-    }
+    },
 
+    dragListSwap: (state, action: PayloadAction<{boardId: string, listId: string, swapListId: string}>)=>{
+      const board = state.boards.find((board)=>board.id === action.payload.boardId)
+      const swapList = board?.lists.find((list)=>list.id === action.payload.swapListId)
+      const list = board?.lists.find((list)=>list.id === action.payload.listId)
+
+      const indexOfSwapList = board?.lists.indexOf(swapList)
+      const indexOfList = board?.lists.indexOf(list)
+
+      board.lists[indexOfList] = swapList
+      board.lists[indexOfSwapList] = list
+
+      return 
+    }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { addList, removeList, addBoard, removeBoard, addCard, removeCard, dragCard, dragCardSwap } = BoardSlice.actions
+export const { addList, removeList, addBoard, removeBoard, addCard, removeCard, dragCard, dragCardSwap, dragListSwap } = BoardSlice.actions
 
 export default BoardSlice.reducer

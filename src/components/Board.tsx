@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom"
-import { BoardList } from "./index";
+import { BoardList, NavbarComp } from "./index";
 import { Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Input } from "@nextui-org/react";
@@ -22,6 +22,9 @@ function Board() {
     }
 
     const handleNewList = () =>{
+        if(listTitle === ""){
+            return
+        }
         const currentBoard = boards.find((board)=>board.id === params.id)
         if(currentBoard){
             const boardId = currentBoard.id;
@@ -41,17 +44,16 @@ function Board() {
     //     dispatch(removeBoard({boardId}))
     // }
 
-    // const handleDrop = (e) =>{
-    //     console.log("List id: " + e.dataTransfer.getData("listId"))
-    //     console.log("Board Id: " + params.id)
-    // }
+    
 
     useEffect(()=>{
         handleLists();
     },[boards])
     return (
+        <>
+        <NavbarComp/>
         <div className="m-2 p-2 flex"
-            // onDrop={(e)=>handleDrop(e)}
+            onDragOver={(e)=>e.preventDefault()}
         >
             <div className="flex">
                 {
@@ -74,22 +76,27 @@ function Board() {
                     </Button>) 
                     : 
                     (
-                        <div className="flex flex-col">
+                        <div className="flex flex-col w-20">
                             <Input
+                                radius="sm"
                                 placeholder="Enter list title..."
                                 onChange={(e)=>setNewList(e.target.value)}
                                 autoFocus
                             >
                             </Input>
                             <div className="flex justify-between p-1">
-                                <Button onPress={handleNewList} className="m-2">
+                                <Button
+                                    radius="none"
+                                    onPress={handleNewList}>
                                     Add list
                                 </Button>
-                                <Button onPress={()=>{
+                                <Button
+                                    radius="none" 
+                                    onPress={()=>{
                                     setNewList("")
                                     setIsOpen(false)
                                 }
-                                    } className="m-2">
+                                    }>
                                     Cancel
                                 </Button>
                             </div>
@@ -100,6 +107,7 @@ function Board() {
                 }
             </div>
         </div>
+        </>
     )
 }
 

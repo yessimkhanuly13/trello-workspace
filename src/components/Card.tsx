@@ -16,11 +16,12 @@ function BoardCard({data, listId}) {
   // }
 
   const handleDrop = (e) => {
+    console.log("Trigger 2")
     const cardId = e.dataTransfer.getData("cardId")
     const boardId = params.id
     const swapCardId = data.id
     const prevListId = e.dataTransfer.getData("listId")
-    if(cardId){
+    if(cardId && listId && cardId && swapCardId && prevListId){
       dispatch(dragCardSwap({boardId, listId, cardId, swapCardId, prevListId}))
     }
 
@@ -28,12 +29,11 @@ function BoardCard({data, listId}) {
   }
 
   return ( 
-    <div className="p-1">
+    <div className="flex-1 p-1">
       <Card
-      className="rounded-sm"
+        className="rounded-sm max-w-24 min-w-24"
         isHoverable
         isPressable
-        onPress={()=>console.log('Press' + data.id)}
         draggable 
         onDragOver={(e)=>{
           e.preventDefault()
@@ -44,8 +44,8 @@ function BoardCard({data, listId}) {
         }} 
         onDrop={(e)=>handleDrop(e)}
       >
-        <CardBody>
-          <p>{data.text}</p>
+        <CardBody className="max-w-24 min-w-24">
+          {data.text}
         </CardBody>
       </Card>
     </div>

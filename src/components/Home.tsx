@@ -3,6 +3,7 @@ import { RootState } from "../store/store"
 import { addBoard } from "../store/board/boardSlice"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { NavbarComp } from "./index"
 
 function Home() {
   const boards = useSelector((state: RootState) => state.board.boards)
@@ -18,11 +19,9 @@ function Home() {
 
   
   return (
+    <>
+    <NavbarComp/>
     <div className="flex flex-col m-2 p-2">
-      <div className="flex flex-col">
-        <input name="title" type="text" onChange={(e)=>setBoardTitle(e.target.value)}/>
-        <button onClick={handleBoard}>Add new Board</button>
-      </div>
       <h2>Boards:</h2>
       <div className="flex flex-between flex-auto">
         {boards.map((board)=>{
@@ -37,6 +36,7 @@ function Home() {
         })}
       </div>
     </div>
+    </>
   )
 }
 
