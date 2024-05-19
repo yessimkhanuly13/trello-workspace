@@ -6,8 +6,7 @@ import { store } from './store/store.ts'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Board from './components/Board.tsx'
-import {NextUIProvider} from '@nextui-org/react'
-import {NavbarComp} from './components/index.tsx'
+import {NextUIProvider} from '@nextui-org/react'  
 
 const router = createBrowserRouter([
   {

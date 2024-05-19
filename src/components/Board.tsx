@@ -15,6 +15,7 @@ function Board() {
     const [lists, setLists] = useState<List[]>([]); 
     const [listTitle, setNewList] = useState<string>("") 
     const [boardTitle, setBoardTitle] = useState<string>("")
+    const [backgroundColor, setBackgroundColor] = useState<string>("")
     const dispatch = useDispatch();
 
     const handleLists = () => {
@@ -22,6 +23,7 @@ function Board() {
         setBoardTitle(currentBoard.title)
         currentBoard && setLists(currentBoard.lists)
         currentBoard && console.log(lists)
+        currentBoard && setBackgroundColor(currentBoard.backgroundColor)
     }
 
     const handleNewList = () =>{
@@ -53,12 +55,12 @@ function Board() {
         handleLists();
     },[boards])
     return (
-        <>
+        <div className= {`${backgroundColor} h-full w-full overflow-x-auto no-scrollbar space-x-4`}>
         <NavbarComp/>
         <div className="flex w-screen p-2">
             <p>{boardTitle}</p>
         </div>
-        <div className="m-2 p-2 flex"
+        <div className="flex h-screen"
             onDragOver={(e)=>e.preventDefault()}
         >
             <div className="flex">
@@ -113,7 +115,7 @@ function Board() {
                 }
             </div>
         </div>
-        </>
+        </div>
     )
 }
 

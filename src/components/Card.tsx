@@ -31,7 +31,7 @@ function BoardCard({data, listId}) {
   return ( 
     <div className="flex-1 p-1">
       <Card
-        className="rounded-sm max-w-24 min-w-24"
+        radius="sm"
         isHoverable
         isPressable
         draggable 
@@ -44,7 +44,7 @@ function BoardCard({data, listId}) {
         }} 
         onDrop={(e)=>handleDrop(e)}
       >
-        <CardBody className="max-w-24 min-w-24">
+        <CardBody className="flex-1 max-w-1/5">
           {data.text}
         </CardBody>
       </Card>

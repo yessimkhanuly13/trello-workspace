@@ -50,7 +50,7 @@ function BoardList({arr}) {
   }
 
   return (
-    <div className="flex-1 flex-col p-2 max-w-16 m-4 h-screen" 
+    <div className="flex-1 flex-col p-2 h-screen" 
       draggable
       onDragStart={(e)=>{ e.dataTransfer.setData("boardListId", arr.id)
       console.log('Drag start')

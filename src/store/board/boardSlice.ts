@@ -14,7 +14,8 @@ export interface List{
 export interface Board {
   lists: List[], 
   title: string,
-  id: string
+  id: string, 
+  backgroundColor: string
 }
 
 export interface Boards {
@@ -26,6 +27,7 @@ const initialState = {
     {
       title: "Amazing Board",
       id: "board_1",
+      backgroundColor: "bg-gradient-to-r from-green-400 from-pink-500",
       lists: [
         {
           title: "Interesting List",
@@ -104,11 +106,12 @@ export const BoardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    addBoard: (state, action: PayloadAction<{boardId: string, boardTitle: string}>) =>{
+    addBoard: (state, action: PayloadAction<{boardId: string, boardTitle: string, backgroundColor: string}>) =>{
         state.boards.push({
           title: action.payload.boardTitle,
           id: action.payload.boardId,
-          lists: []
+          lists: [],
+          backgroundColor: action.payload.backgroundColor
         })
     },
 
