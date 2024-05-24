@@ -1,4 +1,4 @@
-import { Button, Navbar, NavbarContent, Popover, PopoverTrigger, PopoverContent, Input, Checkbox } from '@nextui-org/react'
+import { Button, Navbar, NavbarContent, Popover, PopoverTrigger, PopoverContent, Input } from '@nextui-org/react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'

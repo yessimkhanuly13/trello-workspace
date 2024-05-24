@@ -55,7 +55,7 @@ function Board() {
         handleLists();
     },[boards])
     return (
-        <div className= {`${backgroundColor} h-full w-full overflow-x-auto no-scrollbar space-x-4`}>
+        <div className= {`${backgroundColor} overflow-auto no-scrollbar space-x-4`}>
         <NavbarComp/>
         <div className="flex w-screen p-2">
             <p>{boardTitle}</p>
@@ -63,7 +63,7 @@ function Board() {
         <div className="flex h-screen"
             onDragOver={(e)=>e.preventDefault()}
         >
-            <div className="flex">
+            <div className="flex max-w-screen">
                 {
                     lists && lists.map((list)=>{
                         return (

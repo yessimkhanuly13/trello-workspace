@@ -1,8 +1,8 @@
-import { Button, card } from "@nextui-org/react";
+import { Button, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 import { useState } from "react";
 import { Textarea, Input } from "@nextui-org/react";
 import { addCard, removeList, dragCard, dragListSwap } from "../store/board/boardSlice"
-import { BoardCard } from "./index"
+import { BoardCard, LogoCross, LogoMore } from "./index"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../store/store";
@@ -12,10 +12,11 @@ function BoardList({arr}) {
 
   const params =  useParams<{id: string}>();
   const boards = useSelector((state: RootState)=>state.board.boards)
-  const [isOpen, setIsOpen] = useState<Boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const [title, setTitle] = useState<string>('');
   const [isEditingTitle, setIsEditingTitle] = useState<Boolean>(false)
   const [text, setCardText] = useState<string>("")
+  const [openMore, setOpenMore] = useState<boolean>(false)
   const dispatch = useDispatch();
 
   const handleNewCard = () => {
@@ -27,12 +28,14 @@ function BoardList({arr}) {
       setIsOpen(false)
   }
 
-  // const handleRemoveList = () =>{
-  //   const currentBoard = boards.find((board) => board.id === params.id)
-  //   const boardId = currentBoard ? currentBoard.id : ""
-  //   const listId = arr.id
-  //   dispatch(removeList({boardId, listId}))
-  // }
+  const handleRemoveList = () =>{
+    const currentBoard = boards.find((board) => board.id === params.id)
+    const boardId = currentBoard ? currentBoard.id : ""
+    const listId = arr.id
+    dispatch(removeList({boardId, listId}))
+    setOpenMore(false)
+    console.log("Here")
+  }
 
   const handleDrop = (e) =>{
       const listId = arr.id
@@ -50,7 +53,7 @@ function BoardList({arr}) {
   }
 
   return (
-    <div className="flex-1 flex-col p-2 h-screen" 
+    <div className="flex-1 flex-col p-2 max-h-full bg-slate-100 mr-2 scroll-m-0.5 overflow-auto w-1/6" 
       draggable
       onDragStart={(e)=>{ e.dataTransfer.setData("boardListId", arr.id)
       console.log('Drag start')
@@ -58,15 +61,53 @@ function BoardList({arr}) {
       onDragOver={(e)=>e.preventDefault()}
       onDrop={(e) => handleDrop(e)}
     >
+      <div onClick={()=>setIsEditingTitle(true)} className="flex justify-between">
       {isEditingTitle ? 
-        (
-            <Input
-              autoFocus
-              onBlur={()=>setIsEditingTitle(false)}
-              defaultValue={arr.title}
-              />
-        ) : (<h1 onClick={()=>setIsEditingTitle(true)}>{arr.title}</h1>)
-      }
+          (
+              <Input
+                autoFocus
+                onBlur={()=>setIsEditingTitle(false)}
+                defaultValue={arr.title}
+                />
+          ) : (
+          <div className="flex align-center justify-center">
+            <h1 className="p-2">{arr.title}</h1>
+          </div>
+
+        )
+        }
+        <Popover 
+            isOpen={openMore}
+            onOpenChange={(open) => setOpenMore(open)}
+            placement="bottom" 
+            showArrow={true} 
+            radius='sm'>
+            <PopoverTrigger>
+              <Button className="bg-inherit" isIconOnly>
+                <LogoMore/>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <div>
+                <div className="flex justify-between">
+                  <h2 className="text-center p-2">List actions</h2>
+                  <Button className="bg-ingerit" isIconOnly onClick={()=>setOpenMore(false)}>
+                    <LogoCross/>
+                  </Button>
+                </div>
+                <div>
+                  <Button 
+                  className='w-full bg-inherit'
+                  onClick={handleRemoveList}
+                  >
+                    Archive this list
+                  </Button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+      </div>
+
       <div className="flex flex-col">{arr.cards.map((card)=>{
         return (
           <BoardCard data={card} listId={arr.id}/>

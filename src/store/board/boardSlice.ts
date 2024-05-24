@@ -133,7 +133,7 @@ export const BoardSlice = createSlice({
 
     removeList: (state, action:  PayloadAction<{boardId: string, listId: string}>) =>{
       const board = state.boards.find((board) => board.id === action.payload.boardId)
-      board && board.lists.filter((list) => list.id !== action.payload.listId)
+      board.lists = board.lists.filter((list) => list.id !== action.payload.listId)
 
       console.log(board)
     }, 
