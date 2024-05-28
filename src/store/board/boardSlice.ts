@@ -138,18 +138,32 @@ export const BoardSlice = createSlice({
       console.log(board)
     }, 
 
-    addCard: (state, action: PayloadAction<{boardId: string, listId: string, cardId: string, text: string}>) =>{
+    changeListTitle: (state, action: PayloadAction<{boardId: string, listId: string, title: string}>)=> {
+      const board = state.boards.find((board)=> board.id === action.payload.boardId)
+      const newLists = board?.lists.map((list)=>{
+        if(list.id === action.payload.listId){
+          return {
+            ...list, title: action.payload.title
+          }
+        }
+        return list
+      })
+      
+      board.lists = newLists
+      console.log(newLists)
 
+    },
+
+    addCard: (state, action: PayloadAction<{boardId: string, listId: string, cardId: string, text: string}>) =>{
+      console.log(action.payload.text)
+     
       const board = state.boards.find((board) => board.id === action.payload.boardId)
-      console.log("Board: ",board)
       const list  = board ? board.lists.find((list)=> list.id === action.payload.listId) : null;
-      console.log("List: ",list)
+
       list && list.cards.push({
         id: action.payload.cardId,
         text: action.payload.text
       })
-
-      console.log("Board:" + board, "List:" + list)
       
     }, 
 
@@ -229,6 +243,6 @@ export const BoardSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addList, removeList, addBoard, removeBoard, addCard, removeCard, dragCard, dragCardSwap, dragListSwap } = BoardSlice.actions
+export const { addList, removeList, addBoard, removeBoard, addCard, removeCard, dragCard, dragCardSwap, dragListSwap, changeListTitle} = BoardSlice.actions
 
 export default BoardSlice.reducer

@@ -1,6 +1,6 @@
 import Board from "./Board";
 import BoardCard from "./Card";
-import BoardList from "./BoardList";
+import BoardList from "./List/BoardList";
 import Home from "./Home";
 import NavbarComp from "./Navbar";
 import LogoCross from "./LogoCross";

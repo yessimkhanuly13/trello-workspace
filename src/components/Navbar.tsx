@@ -9,12 +9,20 @@ interface Gradient {
   style: string
 }
 
+// interface BackgrounImgUrl {
+//   url: string
+// }
+
 const COLORS: Gradient[] = [
   {style: "bg-gradient-to-r from-green-400 from-pink-500"},
   {style: "bg-gradient-to-r from-green-400 to-blue-500"}, 
   {style: "bg-gradient-to-r from-pink-500 to-yellow-500"}, 
   {style: "bg-gradient-to-r from-indigo-500 to-yellow-500"}
 ]
+
+// const BGIMAGES: BackgrounImgUrl[] = [
+//   {url: }
+// ] 
 
 function NavbarComp() {
   const [boardTitle, setBoardTitle] = useState<string>("")
@@ -104,7 +112,6 @@ function NavbarComp() {
                 </Button>
               </div>
 
-                
             </PopoverContent>
           </Popover>
       </NavbarContent>

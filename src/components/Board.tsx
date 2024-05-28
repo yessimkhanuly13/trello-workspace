@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom"
-import { BoardList, NavbarComp } from "./index";
+import { BoardList, LogoCross, NavbarComp } from "./index";
 import { Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Input } from "@nextui-org/react";
@@ -55,7 +55,7 @@ function Board() {
         handleLists();
     },[boards])
     return (
-        <div className= {`${backgroundColor} overflow-auto no-scrollbar space-x-4`}>
+        <div className= {`${backgroundColor} overflow-auto no-scrollbar space-x-4 h-screen overflow-y-hidden`}>
         <NavbarComp/>
         <div className="flex w-screen p-2">
             <p>{boardTitle}</p>
@@ -72,19 +72,19 @@ function Board() {
                     })
                 }
             </div>
-            <div className="m-2 p-2">
+            <div>
                {
                 !isOpen ? ( 
                     <Button 
                         radius="full" 
-                        className="rounded p-4 bg-inherit"
+                        className="rounded w-72 bg-slate-100"
                         onPress={()=>setIsOpen(true)}    
                     >
                    + Add another list
                     </Button>) 
                     : 
                     (
-                        <div className="flex flex-col w-20">
+                        <div className="flex flex-col w-72">
                             <Input
                                 radius="sm"
                                 placeholder="Enter list title..."
@@ -92,20 +92,24 @@ function Board() {
                                 autoFocus
                             >
                             </Input>
-                            <div className="flex justify-between p-1">
+                            <div className="flex justify-start">
                                 <Button
                                     radius="none"
+                                    className="mt-1"
+                                    color="primary"
                                     onPress={handleNewList}>
                                     Add list
                                 </Button>
                                 <Button
                                     radius="none" 
+                                    className="mt-1 ml-1 bg-transparent hover:bg-slate-100"
+                                    isIconOnly
                                     onPress={()=>{
                                     setNewList("")
                                     setIsOpen(false)
                                 }
                                     }>
-                                    Cancel
+                                    <LogoCross/>
                                 </Button>
                             </div>
                         </div>
