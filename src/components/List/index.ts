@@ -1,5 +1,5 @@
-import ListBody from "./ListBody";
+import ListBody from "./ListBody/ListBody";
 import ListFooter from "./ListFooter";
-import ListHeader from "./ListHeader";
+import ListHeader from "./ListHeader/ListHeader";
 
 export {ListBody, ListFooter, ListHeader}

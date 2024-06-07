@@ -29,7 +29,7 @@ function BoardCard({data, listId}) {
   }
 
   return ( 
-    <div className="flex-1 p-1">
+    <div className="flex-1 p-1 max-w-full">
       <Card
         radius="sm"
         isHoverable

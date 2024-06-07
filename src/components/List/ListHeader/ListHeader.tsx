@@ -1,7 +1,7 @@
 import { Input } from '@nextui-org/react'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { changeListTitle } from '../../store/board/boardSlice';
+import { changeListTitle } from '../../../store/board/boardSlice';
 import { useParams } from 'react-router-dom';
 
 function ListHeader({list}) {
