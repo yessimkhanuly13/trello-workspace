@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 // import { RootState } from "../store/store";
 import { dragCardSwap } from "../../store/board/boardSlice"
-import CardModal from "./CardModal";
+import CardModal from "./CardModal/CardModal";
 
 function BoardCard({data, listId}) {
   const params = useParams<{id: string}>()
