@@ -5,7 +5,7 @@ import './index.css'
 import { store } from './store/store.ts'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Board from './components/Board.tsx'
+import Board from './components/Board/Board.tsx'
 import {NextUIProvider} from '@nextui-org/react'  
 
 const router = createBrowserRouter([

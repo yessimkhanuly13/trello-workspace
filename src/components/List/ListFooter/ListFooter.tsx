@@ -2,7 +2,7 @@ import { Button, Textarea } from '@nextui-org/react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { addCard } from '../../store/board/boardSlice';
+import { addCard } from '../../../store/board/boardSlice';
 
 function ListFooter({list, currentBoard}) {
     const [isOpen, setIsOpen] = useState<boolean>(false)

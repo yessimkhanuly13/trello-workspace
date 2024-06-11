@@ -40,7 +40,7 @@ function BoardList({arr}) {
   }
 
   return (
-    <div className="flex-1 flex-col p-2 bg-slate-100 mr-2 w-72 rounded h-3/4" 
+    <div className="flex-1 flex-col p-2 bg-slate-100 mr-2 w-72 rounded h-3/4 flex-wrap overflow-auto" 
       draggable
       onDragStart={(e)=>{ e.dataTransfer.setData("boardListId", arr.id)
       console.log('Drag start')

@@ -1,12 +1,13 @@
 import { Link, useParams } from "react-router-dom"
-import { BoardList, LogoCross, NavbarComp } from "./index";
+import { BoardList, LogoCross, NavbarComp } from "../index";
 import { Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Input } from "@nextui-org/react";
 import { useDispatch, useSelector } from "react-redux";
-import { List, addList, removeBoard } from "../store/board/boardSlice";
-import { RootState } from "../store/store";
+import { List, addList, removeBoard } from "../../store/board/boardSlice";
+import { RootState } from "../../store/store";
 import { v4 as uuidv4 } from "uuid"
+import BoardHeader from "./BoardHeader/BoardHeader";
 
 function Board() {
     const params =  useParams<{id: string}>();
@@ -49,17 +50,15 @@ function Board() {
     //     dispatch(removeBoard({boardId}))
     // }
 
-    
-
     useEffect(()=>{
         handleLists();
     },[boards])
+
+
     return (
         <div className= {`${backgroundColor} overflow-auto no-scrollbar space-x-4 h-screen overflow-y-hidden`}>
         <NavbarComp/>
-        <div className="flex w-screen p-2">
-            <p>{boardTitle}</p>
-        </div>
+        <BoardHeader boardTitle={boardTitle}/>
         <div className="flex h-screen"
             onDragOver={(e)=>e.preventDefault()}
         >

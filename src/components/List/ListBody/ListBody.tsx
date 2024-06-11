@@ -1,5 +1,5 @@
 import React from 'react'
-import BoardCard from '../../Card'
+import BoardCard from '../../Card/Card'
 
 function ListBody({list}) {
   return (

@@ -1,12 +1,14 @@
-import { Card, CardBody } from "@nextui-org/react";
+import { Card, CardBody, useDisclosure } from "@nextui-org/react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 // import { RootState } from "../store/store";
-import { dragCardSwap } from "../store/board/boardSlice"
+import { dragCardSwap } from "../../store/board/boardSlice"
+import CardModal from "./CardModal";
 
 function BoardCard({data, listId}) {
   const params = useParams<{id: string}>()
   const dispatch = useDispatch()
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   
   // const handleRemove = (cardId) =>{
   //   const currentBoard = boards.find((board)=> board.id === params.id)
@@ -31,6 +33,7 @@ function BoardCard({data, listId}) {
   return ( 
     <div className="flex-1 p-1 max-w-full">
       <Card
+        onPress={onOpen}
         radius="sm"
         isHoverable
         isPressable
@@ -48,6 +51,7 @@ function BoardCard({data, listId}) {
           {data.text}
         </CardBody>
       </Card>
+      <CardModal isOpen={isOpen} onOpenChange={onOpenChange} text={data.text}/>
     </div>
   )
 }

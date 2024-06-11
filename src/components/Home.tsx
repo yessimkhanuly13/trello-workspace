@@ -26,7 +26,7 @@ function Home() {
       <div className="flex flex-between flex-auto">
         {boards.map((board)=>{
           return(
-            <div className="border m-2 flex flex-col p-2">
+            <div className={`${board.backgroundColor} border m-2 flex flex-col p-2 w-1/6 h-12`}>
                 {/* <button onClick={()=> dispatch(deleteBoard({ id: board.id }))}>Delete</button> */}
                 <Link to={`/board/${board.id}`}>
                   <div>{board.title}</div>
