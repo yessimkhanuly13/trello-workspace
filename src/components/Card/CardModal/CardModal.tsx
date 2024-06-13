@@ -3,7 +3,7 @@ import DescriptionLogo from "../DescriptionLogo";
 import { useState } from "react";
 import CardModalHeader from "./CardModalHeader";
 
-export default function CardModal({isOpen, onOpenChange, text}) {
+export default function CardModal({isOpen, onOpenChange, text, handleChange}) {
   const [isDescVisible, setIsDescVisible] = useState<boolean>(false)
   return (
     <>
@@ -11,7 +11,7 @@ export default function CardModal({isOpen, onOpenChange, text}) {
         <ModalContent>
           {() => (
             <>
-            <CardModalHeader title={text}/>
+            <CardModalHeader text={text} handleChange={handleChange}/>
               <ModalBody>
                 <div className="row-span-3 flex flex-col">
                   <div className="flex gap-2">

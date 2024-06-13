@@ -2,7 +2,7 @@ import { Card, CardBody, useDisclosure } from "@nextui-org/react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 // import { RootState } from "../store/store";
-import { dragCardSwap } from "../../store/board/boardSlice"
+import { changeCardTitle, dragCardSwap } from "../../store/board/boardSlice"
 import CardModal from "./CardModal/CardModal";
 
 function BoardCard({data, listId}) {
@@ -15,7 +15,13 @@ function BoardCard({data, listId}) {
   //   const boardId = currentBoard ? currentBoard.id : ""
   //   const listId = arr.id
   //   dispatch(removeCard({boardId, listId, cardId}))
-  // }
+  // }'
+
+  const handleTitleChange = (newTitle: string) =>{
+    const boardId = params.id
+    const cardId = data.id
+    dispatch(changeCardTitle({boardId, listId, cardId, newTitle}))
+  }
 
   const handleDrop = (e) => {
     console.log("Trigger 2")
@@ -51,7 +57,7 @@ function BoardCard({data, listId}) {
           {data.text}
         </CardBody>
       </Card>
-      <CardModal isOpen={isOpen} onOpenChange={onOpenChange} text={data.text}/>
+      <CardModal isOpen={isOpen} onOpenChange={onOpenChange} text={data.text} handleChange={handleTitleChange}/>
     </div>
   )
 }

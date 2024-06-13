@@ -1,24 +1,23 @@
 import { Input, ModalHeader } from '@nextui-org/react'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { changeCardTitle } from '../../../store/board/boardSlice'
 
-function CardModalHeader({title}) {
-  const [newTitle, setNewTitle] = useState<string>('')
-  const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false)
-  // const dispatch = useDispatch()
+function CardModalHeader({text, handleChange}) {
+  const [newText, setNewText] = useState<string>('')
+  const [isEditingText, setIsEditingText] = useState<boolean>(false)
 
-  const handleChange = () => {
-    setIsEditingTitle(false)
-    // dispatch(changeCardTitle({}))
+  const handleTextChange = (text) => {
+    handleChange(text)
+    setIsEditingText(false)
   }
+
+
   return (
-    !isEditingTitle ? (<ModalHeader onClick={()=>setIsEditingTitle(true)} className="flex flex-col gap-1">{title}</ModalHeader>) :
+    !isEditingText ? (<ModalHeader onClick={()=>setIsEditingText(true)} className="flex flex-col gap-1">{text}</ModalHeader>) :
     ( <div className='p-6'>
         <Input 
-          onChange={(e)=>setNewTitle(e.target.value)}
-          onBlur={handleChange}
-          defaultValue={title}
+          onChange={(e)=>setNewText(e.target.value)}
+          onBlur={()=>handleTextChange(newText)}
+          defaultValue={text}
           autoFocus
         /> 
       </div>

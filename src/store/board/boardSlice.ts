@@ -245,13 +245,13 @@ export const BoardSlice = createSlice({
       const newCards = list?.cards.map((card)=>{
         if(card.id === action.payload.cardId){
           return {
-            ...card, title: action.payload.newTitle
+            ...card, text: action.payload.newTitle
           }
         }
         return card
       })
-      list.cards = newCards
 
+      list.cards = newCards
     }
     
     }
