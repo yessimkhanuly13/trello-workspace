@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom"
-import { BoardList, LogoCross, NavbarComp } from "../index";
+import { BoardList, NavbarComp } from "../index";
+import { LogoCross } from "../../assets/index";
 import { Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Input } from "@nextui-org/react";

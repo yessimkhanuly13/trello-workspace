@@ -1,7 +1,7 @@
 import { Button, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { removeList, dragCard, dragListSwap, Board } from "../../store/board/boardSlice"
-import { LogoCross, LogoMore } from "../index"
+import { LogoCross, LogoMore } from "../../assets/index"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../store/store";

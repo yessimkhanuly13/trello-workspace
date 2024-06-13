@@ -1,5 +1,5 @@
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Textarea} from "@nextui-org/react";
-import DescriptionLogo from "../DescriptionLogo";
+import {Modal, ModalContent, ModalBody, ModalFooter, Button, Textarea} from "@nextui-org/react";
+import DescriptionLogo from "../../../assets/DescriptionLogo";
 import { useState } from "react";
 import CardModalHeader from "./CardModalHeader";
 

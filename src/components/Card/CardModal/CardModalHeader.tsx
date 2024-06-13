@@ -6,7 +6,9 @@ function CardModalHeader({text, handleChange}) {
   const [isEditingText, setIsEditingText] = useState<boolean>(false)
 
   const handleTextChange = (text) => {
-    handleChange(text)
+    if(text !== "") {
+      handleChange(text)
+    }
     setIsEditingText(false)
   }
 
@@ -17,7 +19,7 @@ function CardModalHeader({text, handleChange}) {
         <Input 
           onChange={(e)=>setNewText(e.target.value)}
           onBlur={()=>handleTextChange(newText)}
-          defaultValue={text}
+          // defaultValue={text}
           autoFocus
         /> 
       </div>
