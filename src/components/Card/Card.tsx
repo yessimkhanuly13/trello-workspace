@@ -1,8 +1,8 @@
-import { Card, CardBody, useDisclosure } from "@nextui-org/react";
+import { Button, Card, CardBody, useDisclosure } from "@nextui-org/react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 // import { RootState } from "../store/store";
-import { changeCardTitle, dragCardSwap, removeCard } from "../../store/board/boardSlice"
+import { changeCardTitle, dragCardSwap, removeCard, setDueDate } from "../../store/board/boardSlice"
 import CardModal from "./CardModal/CardModal";
 
 function BoardCard({data, listId}) {
@@ -36,6 +36,13 @@ function BoardCard({data, listId}) {
     return 
   }
 
+  const handleDueDate = (date) => {
+    const dueDate = date.toString()
+    const boardId = params.id
+    const cardId = data.id
+    dispatch(setDueDate({boardId, cardId, listId, dueDate}))
+  }
+
   return ( 
     <div className="flex-1 p-1 max-w-full">
       <Card
@@ -55,6 +62,7 @@ function BoardCard({data, listId}) {
       >
         <CardBody className="flex-1 max-w-1/5">
           {data.text}
+          {data.dueDate ? (<Button className="text-start">{data.dueDate}</Button>) : ""}
         </CardBody>
       </Card>
       <CardModal 
@@ -63,6 +71,7 @@ function BoardCard({data, listId}) {
         text={data.text} 
         handleChange={handleTitleChange}
         handleDelete={handleDelete}
+        handleDueDate={handleDueDate}
         />
     </div>
   )
