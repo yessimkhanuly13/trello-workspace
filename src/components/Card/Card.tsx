@@ -2,7 +2,7 @@ import { Card, CardBody, useDisclosure } from "@nextui-org/react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 // import { RootState } from "../store/store";
-import { changeCardTitle, dragCardSwap } from "../../store/board/boardSlice"
+import { changeCardTitle, dragCardSwap, removeCard } from "../../store/board/boardSlice"
 import CardModal from "./CardModal/CardModal";
 
 function BoardCard({data, listId}) {
@@ -10,12 +10,12 @@ function BoardCard({data, listId}) {
   const dispatch = useDispatch()
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   
-  // const handleRemove = (cardId) =>{
-  //   const currentBoard = boards.find((board)=> board.id === params.id)
-  //   const boardId = currentBoard ? currentBoard.id : ""
-  //   const listId = arr.id
-  //   dispatch(removeCard({boardId, listId, cardId}))
-  // }'
+  const handleDelete = () => {
+    const boardId = params.id
+    const cardId = data.id
+    dispatch(removeCard({boardId, listId, cardId}))
+    onOpenChange()
+  }
 
   const handleTitleChange = (newTitle: string) =>{
     const boardId = params.id
@@ -57,7 +57,13 @@ function BoardCard({data, listId}) {
           {data.text}
         </CardBody>
       </Card>
-      <CardModal isOpen={isOpen} onOpenChange={onOpenChange} text={data.text} handleChange={handleTitleChange}/>
+      <CardModal 
+        isOpen={isOpen} 
+        onOpenChange={onOpenChange} 
+        text={data.text} 
+        handleChange={handleTitleChange}
+        handleDelete={handleDelete}
+        />
     </div>
   )
 }

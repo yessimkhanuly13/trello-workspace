@@ -16,7 +16,7 @@ const COLORS: Gradient[] = [
     {style: "bg-gradient-to-r from-indigo-500 to-yellow-500"}
   ]
 
-function NewBoardPopover({placement, buttonStyle="", buttonText="Create"}) {
+function NewBoardPopover({placement, buttonStyle="", buttonText="Create"}){
     const [boardTitle, setBoardTitle] = useState<string>("")
     const [isValid, setIsValid] = useState<boolean>(true)
     const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -64,7 +64,7 @@ function NewBoardPopover({placement, buttonStyle="", buttonText="Create"}) {
                 <div className={`mt-1 ${backgroundColor} p-2`}>
                   <img src="https://trello.com/assets/14cda5dc635d1f13bc48.svg" alt="" />
                 </div>
-                <div className='grid grid-cols-4 grid-flow-col gap-2 mt-1 '>
+                <div className='grid grid-cols-4 grid-flow-col gap-2 mt-1'>
                     {
                       COLORS.map((gradient)=>{
                         return (

@@ -2,7 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface Cards{
   id: string, 
-  text: string
+  text: string,
+  date: number,
+  label: string
 }
 
 export interface List{
@@ -35,19 +37,27 @@ const initialState = {
           cards: [
             {
               id: "card_1",
-              text: "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible!"
+              text: "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible!",
+              date: Date.now(),
+              label: ""
             },
             {
               id: "card_2",
-              text: "Octopuses have three hearts. Two pump blood to the gills, while the third pumps it to the rest of the body."
+              text: "Octopuses have three hearts. Two pump blood to the gills, while the third pumps it to the rest of the body.",
+              date: Date.now(),
+              label: ""
             },
             {
               id: "card_3",
-              text: "A group of flamingos is called a 'flamboyance'."
+              text: "A group of flamingos is called a 'flamboyance'.",
+              date: Date.now(),
+              label: ""
             },
             {
               id: "card_4",
-              text: "The shortest war in history lasted only 38 minutes. It was between Britain and Zanzibar in 1896."
+              text: "The shortest war in history lasted only 38 minutes. It was between Britain and Zanzibar in 1896.",
+              date: Date.now(),
+              label: ""
             }
           ]
         },
@@ -57,19 +67,27 @@ const initialState = {
           cards: [
             {
               id: "card_5",
-              text: "Bananas are berries, but strawberries aren't."
+              text: "Bananas are berries, but strawberries aren't.",
+              date: Date.now(),
+              label: ""
             },
             {
               id: "card_6",
-              text: "Cows have best friends and can become stressed when they are separated."
+              text: "Cows have best friends and can become stressed when they are separated.",
+              date: Date.now(),
+              label: ""
             },
             {
               id: "card_7",
-              text: "Penguins can jump up to 6 feet in the air."
+              text: "Penguins can jump up to 6 feet in the air.",
+              date: Date.now(),
+              label: ""
             },
             {
               id: "card_8",
-              text: "A single cloud can weigh more than 1 million pounds."
+              text: "A single cloud can weigh more than 1 million pounds.",
+              date: Date.now(),
+              label: ""
             }
           ]
         },
@@ -79,19 +97,27 @@ const initialState = {
           cards: [
             {
               id: "card_9",
-              text: "The Eiffel Tower can be 15 cm taller during the summer due to thermal expansion of the iron."
+              text: "The Eiffel Tower can be 15 cm taller during the summer due to thermal expansion of the iron.",
+              date: Date.now(),
+              label: ""
             },
             {
               id: "card_10",
-              text: "Kangaroos cannot walk backwards."
+              text: "Kangaroos cannot walk backwards.",
+              date: Date.now(),
+              label: ""
             },
             {
               id: "card_11",
-              text: "A small child could swim through the veins of a blue whale."
+              text: "A small child could swim through the veins of a blue whale.",
+              date: Date.now(),
+              label: ""
             },
             {
               id: "card_12",
-              text: "Sea otters hold hands when they sleep to keep from drifting apart."
+              text: "Sea otters hold hands when they sleep to keep from drifting apart.",
+              date: Date.now(),
+              label: ""
             }
           ]
         }
@@ -161,7 +187,9 @@ export const BoardSlice = createSlice({
 
       list && list.cards.push({
         id: action.payload.cardId,
-        text: action.payload.text
+        text: action.payload.text,
+        date: Date.now(),
+        label: ""
       })
       
     }, 
@@ -252,7 +280,13 @@ export const BoardSlice = createSlice({
       })
 
       list.cards = newCards
-    }
+    }, 
+
+    // moveCards: (state, action: PayloadAction<{boardId: string, listId: string, }>) => {
+
+    // }
+
+
     
     }
 })
