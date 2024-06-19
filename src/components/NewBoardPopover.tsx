@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux'
 import { addBoard } from '../store/board/boardSlice'
 import { v4 as uuidv4 } from 'uuid';
 
-interface Gradient {
+export interface Gradient {
     style: string
 }
 
-const COLORS: Gradient[] = [
+export const COLORS: Gradient[] = [
     {style: "bg-gradient-to-r from-green-400 from-pink-500"},
     {style: "bg-gradient-to-r from-green-400 to-blue-500"}, 
     {style: "bg-gradient-to-r from-pink-500 to-yellow-500"}, 

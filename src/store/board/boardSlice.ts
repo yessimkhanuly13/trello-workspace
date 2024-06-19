@@ -4,7 +4,7 @@ export interface Cards{
   id: string, 
   text: string,
   dueDate: string,
-  label: string
+  label: string[]
 }
 
 export interface List{
@@ -39,25 +39,25 @@ const initialState = {
               id: "card_1",
               text: "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible!",
               dueDate: "",
-              label: ""
+              label: ["bg-gradient-to-r from-green-400 from-pink-500"]
             },
             {
               id: "card_2",
               text: "Octopuses have three hearts. Two pump blood to the gills, while the third pumps it to the rest of the body.",
               dueDate: "",
-              label: ""
+              label: []
             },
             {
               id: "card_3",
               text: "A group of flamingos is called a 'flamboyance'.",
               dueDate: "",
-              label: ""
+              label: []
             },
             {
               id: "card_4",
               text: "The shortest war in history lasted only 38 minutes. It was between Britain and Zanzibar in 1896.",
               dueDate: "",
-              label: ""
+              label: []
             }
           ]
         },
@@ -69,25 +69,25 @@ const initialState = {
               id: "card_5",
               text: "Bananas are berries, but strawberries aren't.",
               dueDate: "",
-              label: ""
+              label: []
             },
             {
               id: "card_6",
               text: "Cows have best friends and can become stressed when they are separated.",
               dueDate: "",
-              label: ""
+              label: []
             },
             {
               id: "card_7",
               text: "Penguins can jump up to 6 feet in the air.",
               dueDate: "",
-              label: ""
+              label: []
             },
             {
               id: "card_8",
               text: "A single cloud can weigh more than 1 million pounds.",
               dueDate: "",
-              label: ""
+              label: []
             }
           ]
         },
@@ -99,25 +99,25 @@ const initialState = {
               id: "card_9",
               text: "The Eiffel Tower can be 15 cm taller during the summer due to thermal expansion of the iron.",
               dueDate: "",
-              label: ""
+              label: []
             },
             {
               id: "card_10",
               text: "Kangaroos cannot walk backwards.",
               dueDate: "",
-              label: ""
+              label: []
             },
             {
               id: "card_11",
               text: "A small child could swim through the veins of a blue whale.",
               dueDate: "",
-              label: ""
+              label: []
             },
             {
               id: "card_12",
               text: "Sea otters hold hands when they sleep to keep from drifting apart.",
               dueDate: "",
-              label: ""
+              label: []
             }
           ]
         }
@@ -189,7 +189,7 @@ export const BoardSlice = createSlice({
         id: action.payload.cardId,
         text: action.payload.text,
         dueDate: "",
-        label: ""
+        label: []
       })
       
     }, 
@@ -293,6 +293,20 @@ export const BoardSlice = createSlice({
       })
 
       list.cards = updatedCards
+    },
+
+    setLabel: (state, action: PayloadAction<{boardId: string, cardId: string, listId: string, label: String}>) => {
+      const board = state.boards.find((board)=>board.id === action.payload.boardId)
+      const list = board?.lists.find((list)=>list.id === action.payload.listId)
+      const updatedCards = list?.cards.map((card)=>{
+        if(card.id === action.payload.cardId){
+          card.label.push(action.payload.label)
+        }
+
+        return card
+      })
+
+      list.cards = updatedCards
     }
 
     // moveCards: (state, action: PayloadAction<{boardId: string, listId: string, }>) => {
@@ -309,7 +323,8 @@ export const {
   addList, removeList, addBoard, 
   removeBoard, addCard, removeCard, 
   dragCard, dragCardSwap, dragListSwap, 
-  changeListTitle, changeCardTitle, setDueDate
+  changeListTitle, changeCardTitle, setDueDate,
+  setLabel
 } = BoardSlice.actions
 
 export default BoardSlice.reducer
