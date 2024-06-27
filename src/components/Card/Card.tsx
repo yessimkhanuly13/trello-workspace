@@ -67,7 +67,13 @@ function BoardCard({data, listId}) {
         onDrop={(e)=>handleDrop(e)}
       >
         <CardBody className="flex-1 max-w-1/5">
-          {data.label ? (data.label.map(()=>{return (<span className={`w-16 h-4 ${data.label}`}></span>)})): null}
+          <div className="grid grid-cols-7 gap-1 w-full h-full">
+            {data.label.map((label)=>{
+              return (
+                <span className={`w-8 h-4 ${label}`}></span>
+              )
+            })}
+          </div>
           {data.text}
           {data.dueDate ? (<Button className="text-start">{data.dueDate}</Button>) : ""}
         </CardBody>
@@ -75,7 +81,9 @@ function BoardCard({data, listId}) {
       <CardModal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange} 
-        text={data.text} 
+        text={data.text}
+        labels={data.label}
+        dueDate={data.dueDate}
         handleChange={handleTitleChange}
         handleDelete={handleDelete}
         handleDueDate={handleDueDate}
