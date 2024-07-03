@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import boardSlice from './board/boardSlice'
+import listSlice from './list/listSlice'
+import cardSlice from './card/cardSlice'
 
 export const store = configureStore({
   reducer: {
-    board: boardSlice
+    board: boardSlice,
+    list: listSlice,
+    card: cardSlice
   },
 })
 

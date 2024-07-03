@@ -75,7 +75,7 @@ function BoardCard({data, listId}) {
             })}
           </div>
           {data.text}
-          {data.dueDate ? (<Button className="text-start">{data.dueDate}</Button>) : ""}
+          {data.dueDate ? (<input type="date" value={data.dueDate} disabled className="bg-transparent"/>) : null}
         </CardBody>
       </Card>
       <CardModal 

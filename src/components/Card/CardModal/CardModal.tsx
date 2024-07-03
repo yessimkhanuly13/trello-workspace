@@ -31,17 +31,17 @@ export default function CardModal({isOpen, onOpenChange, text, labels, handleCha
                     <LabelPopover handleLabel={handleLabel} isLogo={true}/>
                     </div>
                 </div>
-                <div>
+                {dueDate && (<div>
                   <span>Due date:</span>
                   <input type="date" value={dueDate} disabled/>
-                </div>
+                </div>)}
                   <div className="flex gap-2">
                     <DescriptionLogo/>
                     <h3>Description</h3>
                   </div>
                   <div className="flex gap-4 mt-1">
                     <Textarea 
-                      onClick={()=>setIsDescVisible(!isDescVisible)}
+                      // onClick={()=>setIsDescVisible(!isDescVisible)}
                       placeholder="Add more detailed description"
                     />
                   </div>  
