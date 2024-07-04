@@ -81,13 +81,8 @@ export const CardSlice = createSlice({
     name: "card",
     initialState,
     reducers: {
-        addCard: (state, action: PayloadAction<{boardId: string, listId: string, cardId: string, text: string}>) =>{
-            console.log(action.payload.text)
-           
-            const board = state.boards.find((board) => board.id === action.payload.boardId)
-            const list  = board ? board.lists.find((list)=> list.id === action.payload.listId) : null;
-      
-            list && list.cards.push({
+        addCard: (state, action: PayloadAction<{cardId: string, text: string}>) =>{     
+            state.cards.push({
               id: action.payload.cardId,
               text: action.payload.text,
               dueDate: "",
@@ -96,13 +91,8 @@ export const CardSlice = createSlice({
             
           }, 
       
-          removeCard: (state, action: PayloadAction<{boardId: string, listId: string, cardId: string }>) =>{
-            const board = state.boards.find((board) => board.id === action.payload.boardId)
-            const list  = board ? board.lists.find((list)=> list.id === action.payload.listId) : null;
-      
-            list.cards =  list.cards.filter((card) => card.id !== action.payload.cardId)
-      
-            console.log("Board:" + board, "List:" + list)
+          removeCard: (state, action: PayloadAction<{ cardId: string }>) =>{
+            state.cards.filter((card) => card.id !== action.payload.cardId)
           },
       
           dragCard: (state, action: PayloadAction<{boardId: string, listId: string, cardId: string, prevListId: string}>) => {

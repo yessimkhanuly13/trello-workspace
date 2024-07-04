@@ -25,42 +25,34 @@ export const ListSlice = createSlice({
     initialState, 
     reducers: {
         
-        dragListSwap: (state, action: PayloadAction<{boardId: string, listId: string, swapListId: string}>)=>{
-            const board = state.boards.find((board)=>board.id === action.payload.boardId)
-            const swapList = board?.lists.find((list)=>list.id === action.payload.swapListId)
-            const list = board?.lists.find((list)=>list.id === action.payload.listId)
+        dragListSwap: (state, action: PayloadAction<{listId: string, swapListId: string}>)=>{
+            const swapList = state.lists.find((list)=>list.id === action.payload.swapListId)
+            const list = state.lists.find((list)=>list.id === action.payload.listId)
     
-            const indexOfSwapList = board?.lists.indexOf(swapList)
-            const indexOfList = board?.lists.indexOf(list)
+            const indexOfSwapList = state.lists.indexOf(swapList)
+            const indexOfList = state.lists.indexOf(list)
     
-            board.lists[indexOfList] = swapList
-            board.lists[indexOfSwapList] = list
+            state.lists[indexOfList] = swapList
+            state.lists[indexOfSwapList] = list
     
             return 
         },
         
-        addList: (state, action: PayloadAction<{boardId: string, listId: string, listTitle: string}>) =>{
-            const board = state.boards.find((board) => board.id === action.payload.boardId)
-            board && board.lists.push({
-            id: action.payload.listId,
-            title: action.payload.listTitle,
-            cards: []
+        addList: (state, action: PayloadAction<{listId: string, listTitle: string}>) =>{
+            state.lists.push({
+                title: action.payload.listTitle,
+                id: action.payload.listId,
+                cards: []
             })
-    
-            console.log(board)
         },
     
     
-        removeList: (state, action:  PayloadAction<{boardId: string, listId: string}>) =>{
-            const board = state.boards.find((board) => board.id === action.payload.boardId)
-            board.lists = board.lists.filter((list) => list.id !== action.payload.listId)
-    
-            console.log(board)
+        removeList: (state, action:  PayloadAction<{listId: string}>) =>{
+            state.lists.filter((list)=>list.id !== action.payload.listId )
         }, 
     
-        changeListTitle: (state, action: PayloadAction<{boardId: string, listId: string, title: string}>)=> {
-            const board = state.boards.find((board)=> board.id === action.payload.boardId)
-            const newLists = board?.lists.map((list)=>{
+        changeListTitle: (state, action: PayloadAction<{listId: string, title: string}>)=> {
+            const newLists = state.lists.map((list)=>{
             if(list.id === action.payload.listId){
                 return {
                 ...list, title: action.payload.title
@@ -69,7 +61,7 @@ export const ListSlice = createSlice({
             return list
             })
             
-            board.lists = newLists
+            state.lists = newLists
     
         }
     }

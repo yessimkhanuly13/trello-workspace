@@ -31,17 +31,21 @@ export const BoardSlice = createSlice({
 
     removeBoard: (state, action: PayloadAction<{boardId: string}>)=>{
       state.boards.filter((board) => board.id !== action.payload.boardId )
+    }, 
+
+    addListToBoard: (state, action: PayloadAction<{boardId: string, listId: string}>) => {
+      const board = state.boards.find((board)=> board.id === action.payload.boardId)
+
+      board?.lists.push(action.payload.listId)
     }
     }
 })
 
 // Action creators are generated for each case reducer function
 export const { 
-  addList, removeList, addBoard, 
-  removeBoard, addCard, removeCard, 
-  dragCard, dragCardSwap, dragListSwap, 
-  changeListTitle, changeCardTitle, setDueDate,
-  setLabel
+  addBoard, 
+  removeBoard, 
+  addListToBoard
 } = BoardSlice.actions
 
 export default BoardSlice.reducer
