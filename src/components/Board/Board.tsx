@@ -13,6 +13,7 @@ import BoardHeader from "./BoardHeader/BoardHeader";
 function Board() {
     const params =  useParams<{id: string}>();
     const boards = useSelector((state: RootState)=>state.board.boards)
+    const listsData = useSelector((state:RootState)=>state.board.lists)
     const [isOpen, setIsOpen] = useState<Boolean>(false)
     const [lists, setLists] = useState<List[]>([]); 
     const [listTitle, setNewList] = useState<string>("") 
@@ -22,10 +23,15 @@ function Board() {
 
     const handleLists = () => {
         const currentBoard = boards.find((board) => board.id === params.id)
-        setBoardTitle(currentBoard.title)
-        currentBoard && setLists(currentBoard.lists)
-        currentBoard && console.log(lists)
-        currentBoard && setBackgroundColor(currentBoard.backgroundColor)
+        
+        const newListData = listsData.filter((list)=>{
+            if(currentBoard?.lists.includes(list.id)){
+                return list
+            }
+        })
+        
+        setLists(newListData)
+        console.log(currentBoard)
     }
 
     const handleNewList = () =>{
@@ -42,7 +48,6 @@ function Board() {
             setIsOpen(false)
         }
         return
-        
     }
 
     // const handleRemoveBoard = () =>{

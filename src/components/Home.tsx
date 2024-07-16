@@ -2,7 +2,6 @@ import { useSelector } from "react-redux"
 import { RootState } from "../store/store"
 import { Link } from "react-router-dom"
 import { NavbarComp } from "./index"
-
 import NewBoardPopover from "./NewBoardPopover"
 
 function Home() {
