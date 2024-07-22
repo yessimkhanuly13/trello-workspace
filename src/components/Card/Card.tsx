@@ -30,16 +30,13 @@ function BoardCard({data, listId}) {
   }
 
   const handleDrop = (e) => {
-    console.log("Trigger 2")
-    const cardId = e.dataTransfer.getData("cardId")
-    const boardId = params.id
-    const swapCardId = data.id
-    const prevListId = e.dataTransfer.getData("listId")
-    if(cardId && listId && cardId && swapCardId && prevListId){
-      dispatch(dragCardSwap({boardId, listId, cardId, swapCardId, prevListId}))
-    }
-
-    return 
+    e.preventDefault();
+    const cardId = e.dataTransfer.getData("cardId");
+    const swapCardId = data.id;
+    const prevListId = e.dataTransfer.getData("listId");
+    if (cardId && listId && swapCardId && prevListId) {
+      dispatch(dragCardSwap({ listId, cardId, swapCardId, prevListId }));
+    } 
   }
 
   const handleDueDate = (date) => {

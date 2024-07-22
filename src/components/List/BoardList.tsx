@@ -11,10 +11,24 @@ function BoardList({arr}) {
 
   const params =  useParams<{id: string}>();
   const boards = useSelector((state: RootState)=>state.board.boards)
+  const listsArr = useSelector((state:RootState)=>state.board.lists)
   const currentBoard = boards.find((board)=> board.id === params.id)
-
+  const cardsArr = useSelector((state: RootState)=>state.board.cards)
+  const [cards, setCards] = useState([])
   const [openMore, setOpenMore] = useState<boolean>(false)
   const dispatch = useDispatch();
+
+  const handleCards = () => {
+    const newArr = [];
+    for(let i = 0; i<arr.cards.length; i++){
+      let temp = cardsArr.find((card)=> card.id === arr.cards[i]);
+      if(temp){
+        newArr.push(temp)
+      }
+    }
+    setCards(newArr)
+  }
+
 
 
   const handleRemoveList = () =>{
@@ -28,9 +42,11 @@ function BoardList({arr}) {
       const listId = arr.id
       const cardId = e.dataTransfer.getData("cardId")
       const prevListId = e.dataTransfer.getData("listId")
-      const boardId = params.id
-      if(cardId && prevListId && boardId && listId){
-        dispatch(dragCard({boardId, listId, cardId, prevListId}))
+      
+      if(cardId && prevListId && listId){
+        console.log("Handle drop from BoardList")
+        dispatch(dragCard({listId, cardId, prevListId}))
+        
       }
       else{
         const swapListId = e.dataTransfer.getData("boardListId")
@@ -38,6 +54,11 @@ function BoardList({arr}) {
       }
       return 
   }
+
+  useEffect(()=>{
+    handleCards()
+  },[listsArr, cardsArr])
+
 
   return (
     <div className="flex-1 flex-col p-2 bg-slate-100 mr-2 w-72 rounded h-3/4 flex-wrap overflow-auto" 
@@ -81,8 +102,8 @@ function BoardList({arr}) {
             </PopoverContent>
           </Popover>
       </div>
-      <ListBody list={arr}/>
-      <ListFooter list={arr} currentBoard={currentBoard}/>
+      <ListBody cards={cards} listId={arr.id}/>
+      <ListFooter listId={arr.id} currentBoard={currentBoard}/>
     </div>
   )
 }

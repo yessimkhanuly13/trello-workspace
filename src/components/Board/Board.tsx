@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Input } from "@nextui-org/react";
 import { useDispatch, useSelector } from "react-redux";
-import { List, addList, removeBoard } from "../../store/board/boardSlice";
+import { List, addList, addListToBoard, removeBoard } from "../../store/board/boardSlice";
 import { RootState } from "../../store/store";
 import { v4 as uuidv4 } from "uuid"
 import BoardHeader from "./BoardHeader/BoardHeader";
@@ -22,8 +22,9 @@ function Board() {
     const dispatch = useDispatch();
 
     const handleLists = () => {
-        const currentBoard = boards.find((board) => board.id === params.id)
         
+        const currentBoard = boards.find((board) => board.id === params.id)
+        setBackgroundColor(currentBoard.backgroundColor)
         const newListData = listsData.filter((list)=>{
             if(currentBoard?.lists.includes(list.id)){
                 return list
@@ -43,7 +44,8 @@ function Board() {
             const boardId = currentBoard.id;
             const listId = uuidv4();
             console.log(listId)
-            dispatch(addList({boardId, listId, listTitle}))
+            dispatch(addList({listId, listTitle}))
+            dispatch(addListToBoard({boardId, listId}))
             setNewList('')
             setIsOpen(false)
         }

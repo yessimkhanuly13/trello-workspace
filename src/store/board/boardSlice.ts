@@ -8,7 +8,7 @@ const initialState = {
       id: "board_1",
       backgroundColor: "bg-gradient-to-r from-green-400 from-pink-500",
       lists: [
-        "list_1","list_2","list_3"
+        "list_3","list_1","list_2"
       ]
     }
   ], 
@@ -137,60 +137,46 @@ export const BoardSlice = createSlice({
         dueDate: "",
         label: []
       })
-      
     }, 
+
+    addCardToList: (state, action: PayloadAction<{listId: string, cardId: string}>)=>{
+      const list = state.lists.find((list)=>list.id === action.payload.listId)
+
+      list?.cards.push(action.payload.cardId)
+    },
 
     removeCard: (state, action: PayloadAction<{ cardId: string }>) =>{
       state.cards.filter((card) => card.id !== action.payload.cardId)
     },
 
-    dragCard: (state, action: PayloadAction<{boardId: string, listId: string, cardId: string, prevListId: string}>) => {
-
-      if(action.payload.prevListId === action.payload.listId){
-        return
-      }
-
-      const list = state.lists.find((list) => list.id === action.payload.listId) 
-      const prevList = state.lists.find((prevList) => prevList.id === action.payload.prevListId) 
-      const currentCard = prevList ? prevList.cards.find((card)=> card === action.payload.cardId) : null
-
-      const isExist = list?.cards.find((card)=>card === action.payload.cardId)
-
-      prevList.cards = prevList.cards.filter((card) => card !== action.payload.cardId)
-
-      if(!isExist){
-        list && list.cards.push(currentCard)
-        console.log("drag card")
-      }
+    dragCard: (state, action: PayloadAction<{ listId: string; cardId: string; prevListId: string }>) => {
     
-    }, 
-    dragCardSwap: (state, action: PayloadAction<{boardId: string, listId: string, cardId: string, swapCardId: string, prevListId: string}>) => {
-      const list = state.lists.find((list)=>list.id === action.payload.listId)
-      const prevList = state.lists.find((list)=> list.id === action.payload.prevListId)
-      const card = prevList && prevList.cards.find((card)=> card === action.payload.cardId)
-      const swapCard = list && list.cards.find((card)=> card === action.payload.swapCardId)
+      if (action.payload.prevListId === action.payload.listId) return;
 
-      const indexOfSwapCard = list && list.cards.indexOf(swapCard)
+      const list = state.lists.find((list) => list.id === action.payload.listId);
+      const prevList = state.lists.find((prevList) => prevList.id === action.payload.prevListId);
+      
+      if (!list || !prevList) return;
 
-      if(indexOfSwapCard > -1 && card && list && !list.cards.includes(card)){
-        const firstHalf = list.cards.slice(0, indexOfSwapCard)
-        const secondHalf = list.cards.slice(indexOfSwapCard)
-        const newCards = [...firstHalf, card, ...secondHalf]
-        list.cards = newCards
+      const cardIndex = prevList.cards.indexOf(action.payload.cardId);
+      if (cardIndex > -1) {
+        const [card] = prevList.cards.splice(cardIndex, 1);
+        list.cards.push(card);
       }
-
-      if(list?.cards.includes(card)){
-        const index = list.cards.indexOf(card)
-        list.cards[index] = swapCard
-        list.cards[indexOfSwapCard] = card
-      }
-
-      if(!action.payload.swapCardId){
-        list?.cards.push(card)
-      }
-      console.log("drag card swap")
-
     },
+    dragCardSwap: (state, action: PayloadAction<{listId: string; cardId: string; swapCardId: string; prevListId: string }>) => {
+      const list = state.lists.find((list) => list.id === action.payload.listId);
+      const prevList = state.lists.find((list) => list.id === action.payload.prevListId);
+      if (!list || !prevList) return;
+
+      const cardIndex = prevList.cards.indexOf(action.payload.cardId);
+      const swapCardIndex = list.cards.indexOf(action.payload.swapCardId);
+      if (cardIndex > -1 && swapCardIndex > -1) {
+        const [card] = prevList.cards.splice(cardIndex, 1);
+        list.cards.splice(swapCardIndex, 0, card);
+      }
+    },
+
     setLabel: (state, action: PayloadAction<{boardId: string, cardId: string, listId: string, label: String}>) => {
       state.cards.map((card)=>{
         if(card.id === action.payload.cardId){
@@ -262,14 +248,10 @@ export const BoardSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { 
-  addBoard, 
-  removeBoard, 
-  addListToBoard,
+  addBoard, removeBoard, addListToBoard,
   addList, removeList, changeListTitle,
-  dragListSwap,
-  addCard, removeCard, changeCardTitle,
-  setLabel, setDueDate, dragCard,
-  dragCardSwap,
+  dragListSwap, addCard, removeCard, changeCardTitle,
+  setLabel, setDueDate, dragCard, dragCardSwap, addCardToList
 } = BoardSlice.actions
 
 export default BoardSlice.reducer

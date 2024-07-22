@@ -2,20 +2,20 @@ import { Button, Textarea } from '@nextui-org/react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { addCard } from '../../../store/board/boardSlice';
+import { addCard, addCardToList } from '../../../store/board/boardSlice';
 
-function ListFooter({list, currentBoard}) {
+function ListFooter({listId}) {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [text, setCardText] = useState<string>('')
     const dispatch = useDispatch()
 
     const handleNewCard = () => {
-        const boardId = currentBoard ? currentBoard.id : ""
-        console.log("Board ID: " + boardId)
-        console.log("List ID: "+ list.id)
-        const listId = list.id
+        // const boardId = currentBoard ? currentBoard.id : ""
+        // console.log("Board ID: " + boardId)
+        console.log("List ID: "+ listId)
         const cardId = uuidv4();
-        dispatch(addCard({boardId, listId, cardId, text}))
+        dispatch(addCard({cardId, text}))
+        dispatch(addCardToList({listId, cardId}))
         setIsOpen(false)
     }
   return (
